@@ -16,10 +16,10 @@ public class Main {
 
         Short cleverest = new Short("Знайка");
         cleverest.action(p->startWork(p,CreatureType.CLEVEREST));
-        Work work1 = new Work("Разработка отдельных узлов", cleverest);
+        Work work1 = new Work.WorkBuilder().setWorkType("Разработка отдельных узлов").setCreature(cleverest).build();
         Short constructors = new Short("Конструкторы");
         constructors.action(p->startWork(p,CreatureType.СONSTRUCTORS));
-        Work work2 = new Work("Разработка отдельных узлов", constructors);
+        Work work2 = new Work.WorkBuilder().setWorkType("Разработка отдельных узлов").setCreature(constructors).build();
         Energy energy = new Energy(14, "Взаимодействие двух разных видов энергии:магнитной с энергией лунного камня", "Магнитная");
         Short scientist = new Short("профессор Звездочкин");
         scientist.action(p->startWork(p,CreatureType.SCIENTIST));

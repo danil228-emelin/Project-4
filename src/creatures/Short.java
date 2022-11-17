@@ -1,12 +1,11 @@
 package creatures;
 
-import creatures.behavior.Emotions;
 import creatures.behavior.Relationship;
 
 import java.util.function.Consumer;
 
  public class Short  extends ShortIdentity implements  Entity,Comparable<Short> {
-     protected Relationship relationship ;
+     private final Relationship relationship ;
 
      public Short(String creatureName) {
          name = creatureName;
@@ -31,7 +30,7 @@ import java.util.function.Consumer;
      public boolean equals(Object obj) {
          if (obj instanceof Short) {
              Short other = (Short) obj;
-             if (other.name == name && other.uniqueness == uniqueness) {
+             if (other.uniqueness == uniqueness) {
                  return true;
              } else {
                  return false;

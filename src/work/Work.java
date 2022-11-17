@@ -26,20 +26,41 @@ public class Work {
         }
     }
 
-    public Work(String job, Short shorties) {
+    private Work(WorkBuilder builder) {
 
-        workType = job;
-        creature = shorties;
+        workType = builder.workType;
+        creature = builder.creature;
         workCondition = WorkCondition.MIDDLE;
         WorkAction.calculateWorkEfficiency(this);
     }
+
+public static class WorkBuilder{
+
+    private String workType;
+    private Short creature;
+
+    public WorkBuilder setWorkType(String workType) {
+        this.workType = workType;
+        return this;
+    }
+
+    public WorkBuilder setCreature(Short creature) {
+        this.creature = creature;
+        return this;
+    }
+public Work build(){
+  return new Work(this);
+}
+
+
+    }
+
+
 
 
    public void  workActions(Consumer<Work> action) {
     action.accept(this);
    }
-
-
 
 }
 
