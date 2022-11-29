@@ -1,5 +1,4 @@
 package work;
-import creatures.Short;
 public class WorkAction {
 
     public static void describeWork(Work job) {
@@ -11,8 +10,7 @@ public class WorkAction {
     }
 
     public static void compareWork(Work f, Work over) {
-
-        if (f.workEfficiency > over.workEfficiency && f.workType == over.workType) {
+        if (f.workEfficiency > over.workEfficiency && f.workType.equals(over.workType)) {
             System.out.println(f.creature.toString() + " делают работу лучше  и быстрее " + "(" + f.workType + ") чем " + over.creature.toString());
         } else {
             System.out.println(over.creature.toString() + " делают работу лучше  и быстрее " + "(" + f.workType + ") чем " + f.creature.toString());
@@ -21,7 +19,7 @@ public class WorkAction {
 
     protected static void calculateWorkEfficiency(Work job) {
         job.workEfficiency =
-                (job.creature.toString() != Job.CreatureType.СONSTRUCTORS.toString()) ?
+                (!job.creature.toString().equals( Job.CreatureType.WORKER.toString())) ?
                         (int) (Math.random() * 5) + 1 : (int) (Math.random() * 91) + 10;
     }
 }

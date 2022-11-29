@@ -3,7 +3,7 @@ import creatures.behavior.Emotions;
 import item.Energy;
 import item.Essence;
 import work.*;
-import myCollection.MyCollection;
+import collection.Collection;
 import static work.Job.CreatureType;
 import static work.Job.startWork;
 import static creatures.behavior.Behavior.*;
@@ -18,7 +18,7 @@ public class Main {
         cleverest.action(p->startWork(p,CreatureType.CLEVEREST));
         Work work1 = new Work.WorkBuilder().setWorkType("Разработка отдельных узлов").setCreature(cleverest).build();
         Short constructors = new Short("Конструкторы");
-        constructors.action(p->startWork(p,CreatureType.СONSTRUCTORS));
+        constructors.action(p->startWork(p,CreatureType.WORKER));
         Work work2 = new Work.WorkBuilder().setWorkType("Разработка отдельных узлов").setCreature(constructors).build();
         Energy energy = new Energy(14, "Взаимодействие двух разных видов энергии:магнитной с энергией лунного камня", "Магнитная");
         Short scientist = new Short("профессор Звездочкин");
@@ -42,7 +42,7 @@ public class Main {
 
         scientist.action(p->say(p,"без споров в науке никуда"));
 
-        MyCollection<Short> collection = new MyCollection<>();
+        Collection<Short> collection = new Collection<>();
         collection.add(cleverest);
         collection.add(constructors);
         System.out.println();
@@ -51,7 +51,6 @@ public class Main {
         collection.getStream().sorted(Comparator.comparingInt(Short::getIq)).forEach(a -> System.out.println(a + "{Iq-" + a.getIq() + "}"));
         collection.getStream().sorted(Comparator.comparingInt(Short::getStrength)).forEach(a -> System.out.println(a + "{Strength-" + a.getStrength() + "}"));
         collection.getStream().sorted(Comparator.comparingInt(Short::getMagicPower)).forEach(a -> System.out.println(a + "{MagicPower-" + a.getMagicPower() + "}"));
-
     }
 
 
