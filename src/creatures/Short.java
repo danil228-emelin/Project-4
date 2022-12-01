@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 public class Short extends ShortIdentity implements Entity, Comparable<Short> {
     private final Relationship relationship;
 
-    public Short(String creatureName) {
+    private Short(String creatureName) {
         name = creatureName;
         int randomNumber = (int) ((Math.random() * 1000) + 1);
         magicPower = randomNumber % 999;
@@ -15,6 +15,10 @@ public class Short extends ShortIdentity implements Entity, Comparable<Short> {
         strength = randomNumber % 10;
         uniqueness = iq + strength + magicPower;
         relationship = new Relationship(this);
+    }
+
+    public static Short createShort(String creatureName) {
+        return new Short(creatureName);
     }
 
     @Override
