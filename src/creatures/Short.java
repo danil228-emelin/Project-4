@@ -1,11 +1,13 @@
 package creatures;
 
+import creatures.behavior.Feelings;
 import creatures.behavior.Relationship;
+import work.Job;
 
 import java.util.function.Consumer;
 
 public class Short extends ShortIdentity implements Entity, Comparable<Short> {
-    private final Relationship relationship;
+    private Job job;
 
     private Short(String creatureName) {
         name = creatureName;
@@ -15,6 +17,7 @@ public class Short extends ShortIdentity implements Entity, Comparable<Short> {
         strength = randomNumber % 10;
         uniqueness = iq + strength + magicPower;
         relationship = new Relationship(this);
+
     }
 
     public static Short createShort(String creatureName) {
@@ -44,21 +47,6 @@ public class Short extends ShortIdentity implements Entity, Comparable<Short> {
         return uniqueness;
     }
 
-    public int getStrength() {
-        return strength;
-    }
-
-    public int getMagicPower() {
-        return magicPower;
-    }
-
-    public int getIq() {
-        return iq;
-    }
-
-    public int getUniqueness() {
-        return uniqueness;
-    }
 
     public void action(Consumer<Short> l) {
         l.accept(this);
@@ -68,5 +56,16 @@ public class Short extends ShortIdentity implements Entity, Comparable<Short> {
         l.accept(relationship);
     }
 
+    public void describeEmotion() {
+        System.out.println(name + " is " + emotions.getTitle());
+    }
 
+    public void setEmotions(Feelings f) {
+        emotions = f;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
+
+    }
 }
