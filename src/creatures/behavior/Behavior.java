@@ -3,7 +3,7 @@ package creatures.behavior;
 import creatures.Short;
 import item.Essence;
 
-abstract public class Behavior extends CreatureInteraction {
+abstract public class Behavior {
     public static void think(Short creature, Essence object) {
         System.out.println(creature.toString() + " is thinking about " + "(" + object.getItemProblem() + ")");
     }

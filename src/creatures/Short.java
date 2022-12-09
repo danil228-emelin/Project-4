@@ -1,5 +1,6 @@
 package creatures;
 
+import creatures.behavior.BehaveMediator;
 import creatures.behavior.Feelings;
 import creatures.behavior.Relationship;
 import work.Job;
@@ -8,7 +9,7 @@ import java.util.function.Consumer;
 
 public class Short extends ShortIdentity implements Entity, Comparable<Short> {
     private Job job;
-
+    public static final BehaveMediator  behaveMediator= new BehaveMediator();
     private Short(String creatureName) {
         name = creatureName;
         int randomNumber = (int) ((Math.random() * 1000) + 1);
@@ -48,13 +49,6 @@ public class Short extends ShortIdentity implements Entity, Comparable<Short> {
     }
 
 
-    public void action(Consumer<Short> l) {
-        l.accept(this);
-    }
-
-    public void actionRelationShip(Consumer<Relationship> l) {
-        l.accept(relationship);
-    }
 
     public void describeEmotion() {
         System.out.println(name + " is " + emotions.getTitle());
