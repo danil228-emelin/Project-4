@@ -3,7 +3,11 @@ package creatures.behavior;
 import creatures.Short;
 import item.Essence;
 
-abstract public class Behavior {
+import java.util.function.Consumer;
+
+ public class Behavior extends CreatureInteraction implements Behave{
+
+
     public static void think(Short creature, Essence object) {
         System.out.println(creature.toString() + " is thinking about " + "(" + object.getItemProblem() + ")");
     }
@@ -23,4 +27,10 @@ abstract public class Behavior {
     }
 
 
+public void action (Consumer<Short> move,Short shorty){move.accept(shorty);}
+
+     public void actionRelationSheep (Consumer<Relationship> move,Short shorty){move.accept(shorty.getRelationship());}
+
 }
+
+

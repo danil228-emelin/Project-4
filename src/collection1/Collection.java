@@ -5,15 +5,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class Collection<K, V> implements Functionality<K, V> {
+public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
     private Node<K, V>[] hashTable;
     private int size = 0;
     private double threshold;
 
     public Collection() {
-        hashTable = new Node[16];
+        hashTable = (Node<K, V>[]) new Node[16];
         threshold = hashTable.length * 0.75;
     }
+
 
     @Override
     public boolean insert(K key, V value) {
@@ -31,8 +32,6 @@ public class Collection<K, V> implements Functionality<K, V> {
             if (keyExistButValueNew(node, newNode, value) || collisionProcessing(node, newNode, nodeList)) {
                 return true;
             }
-
-
         }
         return false;
     }
@@ -63,9 +62,9 @@ public class Collection<K, V> implements Functionality<K, V> {
         return false;
     }
 
-        private void arrayDoubling() {
+    private void arrayDoubling() {
         Node<K, V>[] oldOne = hashTable;
-        hashTable = new Node[oldOne.length * 2];
+        hashTable = (Node<K, V>[]) new Node[oldOne.length * 2];
         size = 0;
         for (Node<K, V> node : oldOne) {
             if (node != null) {
@@ -117,14 +116,14 @@ public class Collection<K, V> implements Functionality<K, V> {
     }
 
     private int hash(K key) {
-        int hash = 31;
-        hash = hash * 17 + key.hashCode();
-        return hash % hashTable.length;
+
+        int hash = 31 * 17 + key.hashCode();
+        return Math.abs(hash % hashTable.length);
     }
 
     @Override
     public Iterator<V> iterator() {
-        return new Iterator<V>() {
+        return new Iterator<>() {
             int counterArray;
             int valuesCounter;
             Iterator<Node<K, V>> subIterator = null;
@@ -146,11 +145,11 @@ public class Collection<K, V> implements Functionality<K, V> {
             }
 
             private boolean moveToNextCell() {
-                counterArray++;
-                while (hashTable[counterArray] == null) {
+                do
                     counterArray++;
-                }
-                return hashTable[counterArray] != null;
+                while (hashTable[counterArray] == null && counterArray < hashTable.length);
+
+                return (hashTable[counterArray] != null && counterArray < hashTable.length);
             }
 
             @Override
@@ -163,33 +162,33 @@ public class Collection<K, V> implements Functionality<K, V> {
 
     }
 
-    private class Node<K, V> {
-        private List<Node<K, V>> nodes;
+    public class Node<K, V> {
+        private final List<Node<K, V>> nodes;
         private int hash;
-        private K key;
+        private final K key;
         private V value;
 
 
         private Node(K key, V value) {
             this.key = key;
             this.value = value;
-            this.nodes = new LinkedList<Node<K, V>>();
+            nodes = new LinkedList<>();
 
         }
 
         private List<Node<K, V>> getNodes() {
-            return this.nodes;
+            return nodes;
         }
 
         private int hash() {
-            return hashCode() % hashTable.length;
+            return Math.abs(hashCode() % hashTable.length);
         }
 
         private K getKey() {
             return key;
         }
 
-        private V getValue() {
+        public V getValue() {
             return value;
         }
 
@@ -200,9 +199,8 @@ public class Collection<K, V> implements Functionality<K, V> {
         @Override
         public int hashCode() {
 
-            hash = 31 * 17 + key.hashCode();
-            hash = hash * 17 + value.hashCode();
-            return hash;
+            hash = (31 * 17 + key.hashCode()) + value.hashCode();
+            return Math.abs(hash);
         }
 
         @Override

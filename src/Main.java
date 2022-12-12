@@ -12,7 +12,7 @@ import work.WorkCondition;
 import java.util.Comparator;
 
 import static creatures.behavior.Behavior.*;
-import static creatures.behavior.CreatureInteraction.*;
+
 
 
 public class Main {
@@ -37,23 +37,23 @@ public class Main {
 
         work1.compareWork(work2);
 
-        cleverest.behaveMediator.action(p -> think(p, energy), cleverest);
-        cleverest.behaveMediator.action(p -> becomeFriends(p, scientist), cleverest);
-        cleverest.behaveMediator.action(p -> shareThoughts(p, scientist), cleverest);
+        Short.Behave.action(p -> think(p, energy), cleverest);
+        Short.Behave.action(p -> becomeFriends(p, scientist), cleverest);
+        Short.Behave.action(p -> shareThoughts(p, scientist), cleverest);
 
         getDescriptionBehavior();
-        cleverest.behaveMediator.action(p -> discuss(p, scientist, someStaff), cleverest);
-        cleverest.behaveMediator.action(p -> arguing(p, scientist), cleverest);
-        cleverest.behaveMediator.action(p -> showRespect(p, scientist), cleverest);
-        cleverest.behaveMediator.action(p -> understand(p, scientist, "science arguing-normal "), cleverest);
-        cleverest.behaveMediator.action(p -> say(p, "it is ok to argue in science"), scientist);
+        Short.Behave.action(p -> discuss(p, scientist, someStaff), cleverest);
+        Short.Behave.action(p -> arguing(p, scientist), cleverest);
+        Short.Behave.action(p -> showRespect(p, scientist), cleverest);
+        Short.Behave.action(p -> understand(p, scientist, "science arguing-normal "), cleverest);
+        Short.Behave.action(p -> say(p, "it is ok to argue in science"), scientist);
 
 
         Collection<Short> collection = new Collection<>();
         collection.add(cleverest);
         collection.add(constructors);
         System.out.println();
-        collection.getStream().forEach(x -> x.behaveMediator.actionRelationShip(Relationship::getAllFriends, x));
+        collection.getStream().forEach(x->Short.Behave.actionRelationSheep(Relationship::getAllFriends,x));
         collection.getStream().sorted().forEach(a -> System.out.println(a.toString() + "{Uniqueness-" + a.getUniqueness() + "}"));
         collection.getStream().sorted(Comparator.comparingInt(ShortIdentity::getIq)).forEach(a -> System.out.println(a + "{Iq-" + a.getIq() + "}"));
         collection.getStream().sorted(Comparator.comparingInt(ShortIdentity::getStrength)).forEach(a -> System.out.println(a + "{Strength-" + a.getStrength() + "}"));
