@@ -1,15 +1,13 @@
 package work;
 
-import creatures.Short;
+import creatures.Shorty;
 
 
-public class WorkIdentity {
-
+abstract public class WorkIdentity {
 
     protected WorkCondition workCondition;
-    protected int workEfficiency;
     protected String workType;
-    protected Short creature;
+    protected Shorty[] creatures;
 
 
 

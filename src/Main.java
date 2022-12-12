@@ -1,64 +1,78 @@
 import collection.Collection;
-import creatures.Short;
 import creatures.ShortIdentity;
+import creatures.Shorty;
 import creatures.behavior.Feelings;
 import creatures.behavior.Relationship;
+import item.City;
 import item.Energy;
 import item.Essence;
+import item.ScienceCity;
 import work.Job;
 import work.Work;
 import work.WorkCondition;
 
 import java.util.Comparator;
+import java.util.HashMap;
 
 import static creatures.behavior.Behavior.*;
 
-
-
 public class Main {
+    public static final HashMap<String, Shorty> shorts = new HashMap<>();
+
 
     public static void main(String... args) {
 
-        Short cleverest = Short.createShort("Smartest");
+        Shorty cleverest = Shorty.createShort("Smartest");
         cleverest.setJob(Job.CLEVEREST);
-        Work work1 = new Work.WorkBuilder(WorkCondition.SlOW).setWorkType("Developing nodes").setCreature(cleverest).build();
-        Short constructors = Short.createShort("Builders");
+        Work developingNodes = new Work.WorkBuilder(WorkCondition.SlOW).setWorkType("Developing nodes").setCreatures(cleverest).build();
+        Shorty constructors = Shorty.createShort("Builders");
         constructors.setJob(Job.WORKER);
-        Work work2 = new Work.WorkBuilder(WorkCondition.FAST).setWorkType("Developing nodes").setCreature(constructors).build();
+        Work developingNodes2 = new Work.WorkBuilder(WorkCondition.FAST).setWorkType("Developing nodes").setCreatures(constructors).build();
         Energy energy = new Energy(14, "Interaction  two different types of energy:magnetic with moonstone energy", "Магнитная");
-        Short scientist = Short.createShort("professor X");
+        Shorty scientist = Shorty.createShort("professor X");
         scientist.setJob(Job.SCIENTIST);
         Essence someStaff = new Essence("scientific problems");
         cleverest.setEmotions(Feelings.ANGRY);
 
-        work1.describeWork();
+        developingNodes.describeWork();
         cleverest.describeEmotion();
-
-
-        work1.compareWork(work2);
-
-        Short.Behave.action(p -> think(p, energy), cleverest);
-        Short.Behave.action(p -> becomeFriends(p, scientist), cleverest);
-        Short.Behave.action(p -> shareThoughts(p, scientist), cleverest);
-
+        developingNodes.compareWork(developingNodes2);
+        Shorty.Behave.action(p -> think(p, energy), cleverest);
+        Shorty.Behave.action(p -> becomeFriends(p, scientist), cleverest);
+        Shorty.Behave.action(p -> shareThoughts(p, scientist), cleverest);
         getDescriptionBehavior();
-        Short.Behave.action(p -> discuss(p, scientist, someStaff), cleverest);
-        Short.Behave.action(p -> arguing(p, scientist), cleverest);
-        Short.Behave.action(p -> showRespect(p, scientist), cleverest);
-        Short.Behave.action(p -> understand(p, scientist, "science arguing-normal "), cleverest);
-        Short.Behave.action(p -> say(p, "it is ok to argue in science"), scientist);
+        Shorty.Behave.action(p -> discuss(p, scientist, someStaff), cleverest);
+        Shorty.Behave.action(p -> arguing(p, scientist), cleverest);
+        Shorty.Behave.action(p -> showRespect(p, scientist), cleverest);
+        Shorty.Behave.action(p -> understand(p, scientist, "science arguing-normal "), cleverest);
+        Shorty.Behave.action(p -> say(p, "it is ok to argue in science"), scientist);
 
 
-        Collection<Short> collection = new Collection<>();
+        Collection<Shorty> collection = new Collection<>();
         collection.add(cleverest);
         collection.add(constructors);
         System.out.println();
-        collection.getStream().forEach(x->Short.Behave.actionRelationSheep(Relationship::getAllFriends,x));
+        collection.getStream().forEach(x -> Shorty.Behave.actionRelationSheep(Relationship::getAllFriends, x));
         collection.getStream().sorted().forEach(a -> System.out.println(a.toString() + "{Uniqueness-" + a.getUniqueness() + "}"));
         collection.getStream().sorted(Comparator.comparingInt(ShortIdentity::getIq)).forEach(a -> System.out.println(a + "{Iq-" + a.getIq() + "}"));
         collection.getStream().sorted(Comparator.comparingInt(ShortIdentity::getStrength)).forEach(a -> System.out.println(a + "{Strength-" + a.getStrength() + "}"));
         collection.getStream().sorted(Comparator.comparingInt(ShortIdentity::getMagicPower)).forEach(a -> System.out.println(a + "{MagicPower-" + a.getMagicPower() + "}"));
-    }
 
+        System.out.println();
+        ScienceCity scienceCity = new ScienceCity();
+        City.cities.add(scienceCity);
+        Shorty fuchsia = Shorty.createShort("Fuchsia");
+        shorts.put(fuchsia.toString(), fuchsia);
+        Shorty herring = Shorty.createShort("Herring");
+        shorts.put(herring.toString(), herring);
+        Analyzer analyzer = Analyzer.getAnalyzer();
+
+        analyzer.analyzeCity();
+        herring.getLocation();
+        fuchsia.getLocation();
+        Work sketching = new Work.WorkBuilder(WorkCondition.FINISH).setWorkType("sketching").setCreatures(fuchsia, herring).build();
+
+        sketching.describeWork();
+    }
 
 }

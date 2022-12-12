@@ -2,34 +2,34 @@ package creatures.behavior;
 
 
 import java.util.ArrayList;
-import creatures.Short;
+import creatures.Shorty;
 import java.util.List;
 
 public class Relationship {
-    private Short creature;
-    private List<Short> rivals = new ArrayList<>();
-    private List<Short> friends = new ArrayList<>();
+    private Shorty creature;
+    private List<Shorty> rivals = new ArrayList<>();
+    private List<Shorty> friends = new ArrayList<>();
 
-    public Relationship(Short c) {
+    public Relationship(Shorty c) {
         creature = c;
     }
 
-    private void removeFriend(Short a) {
+    private void removeFriend(Shorty a) {
         if (friends.contains(a)) {
             friends.remove(a);
         }
 
     }
 
-    private void removeRival(Short a) {
+    private void removeRival(Shorty a) {
         if (rivals.contains(a)) {
             rivals.remove(a);
         }
 
     }
 
-    public void addRivals(Short... a) {
-        for (Short shortman : a) {
+    public void addRivals(Shorty... a) {
+        for (Shorty shortman : a) {
             if (rivals.contains(shortman)) {
                 continue;
             }
@@ -38,8 +38,8 @@ public class Relationship {
         }
     }
 
-    public void addFriends(Short... a) {
-        for (Short shortman : a) {
+    public void addFriends(Shorty... a) {
+        for (Shorty shortman : a) {
             if (friends.contains(shortman)) {
                 continue;
             }
@@ -48,7 +48,7 @@ public class Relationship {
         }
     }
 
-    public void getRelationSheep(Short a) {
+    public void getRelationSheep(Shorty a) {
         if (rivals.contains(a)) {
             System.out.println(a.toString() + " - rival");
         } else if (friends.contains(a)) {

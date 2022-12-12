@@ -1,6 +1,6 @@
 package creatures.behavior;
 
-import creatures.Short;
+import creatures.Shorty;
 import item.Essence;
 
 import java.util.function.Consumer;
@@ -8,7 +8,7 @@ import java.util.function.Consumer;
  public class Behavior extends CreatureInteraction implements Behave{
 
 
-    public static void think(Short creature, Essence object) {
+    public static void think(Shorty creature, Essence object) {
         System.out.println(creature.toString() + " is thinking about " + "(" + object.getItemProblem() + ")");
     }
 
@@ -17,19 +17,19 @@ import java.util.function.Consumer;
     }
 
 
-    public static void understand(Short f, Short s, String idea) {
+    public static void understand(Shorty f, Shorty s, String idea) {
         System.out.println(f.toString() + " and  " + s.toString() + "understand " + idea);
 
     }
 
-    public static void say(Short f, String idea) {
+    public static void say(Shorty f, String idea) {
         System.out.println(f.toString() + " assume that " + idea);
     }
 
 
-public void action (Consumer<Short> move,Short shorty){move.accept(shorty);}
+public void action (Consumer<Shorty> move, Shorty shorty){move.accept(shorty);}
 
-     public void actionRelationSheep (Consumer<Relationship> move,Short shorty){move.accept(shorty.getRelationship());}
+     public void actionRelationSheep (Consumer<Relationship> move, Shorty shorty){move.accept(shorty.getRelationship());}
 
 }
 

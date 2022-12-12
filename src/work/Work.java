@@ -1,51 +1,64 @@
 package work;
 
-import creatures.Short;
+import creatures.Shorty;
+
+import java.util.Arrays;
+
 
 public class Work extends WorkIdentity {
+    public String toString(Object[] array) {
+        StringBuilder result = new StringBuilder(Arrays.toString(array));
+        return result.substring(1, result.length() - 1);
+    }
 
-       public void describeWork() {
-        System.out.println(creature + " work(" + workType + ")" + "," + workCondition.getAttitude());
+    public void describeWork() {
+
+        System.out.println(toString(creatures) + " do activity (" + workType + ")" + "," + workCondition.getAttitude());
     }
 
 
     public void compareWork(Work over) {
-        if (workEfficiency > over.workEfficiency && workType.equals(over.workType)) {
-            System.out.println(creature.toString() + " makes work better + " + "(" + workType + ") than" + over.creature.toString());
+        if (workCondition.getEfficiency() > over.workCondition.getEfficiency() && workType.equals(over.workType)) {
+            System.out.println(toString(creatures) + " makes work better + " + "(" + workType + ") than" + toString(creatures));
         } else {
-            System.out.println(over.creature.toString() + " makes work better " + "(" + workType + ") than " + creature.toString());
+            System.out.println(toString(over.creatures) + " makes work better " + "(" + workType + ") than " + toString(creatures));
         }
     }
 
-    private  Work(WorkBuilder w){
+    private Work(WorkBuilder w) {
         workType = w.workType;
-        creature = w.creature;
+        creatures = w.creatures;
         workCondition = w.workCondition;
+
     }
 
     public static class WorkBuilder {
 
         private String workType;
-        private Short creature;
+
+        private Shorty[] creatures;
 
         private WorkCondition workCondition;
-        public  WorkBuilder(WorkCondition w){workCondition = w;}
+
+        public WorkBuilder(WorkCondition w) {
+            workCondition = w;
+        }
+
         public WorkBuilder setWorkType(String workType) {
             this.workType = workType;
             return this;
         }
 
-        public WorkBuilder setCreature(Short creature) {
-            this.creature = creature;
+        public WorkBuilder setCreatures(Shorty... creatures) {
+            this.creatures = creatures;
             return this;
         }
 
+
         public Work build() {
-            return  new Work(this);
+            return new Work(this);
         }
 
 
     }
-
-
 }

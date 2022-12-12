@@ -3,12 +3,22 @@ package creatures;
 import creatures.behavior.Behavior;
 import creatures.behavior.Feelings;
 import creatures.behavior.Relationship;
+import item.City;
 import work.Job;
 
-public class Short extends ShortIdentity implements Entity, Comparable<Short> {
+import java.util.LinkedList;
+
+public class Shorty extends ShortIdentity implements Entity, Comparable<Shorty> {
+    public static final LinkedList<Shorty> allShorts = new LinkedList<>();
+
+    public void getLocation() {
+        System.out.println(name+" is now in " + location);
+    }
+
     private Job job;
+    private City location;
     public static final Behavior Behave= new Behavior();
-    private Short(String creatureName) {
+    private Shorty(String creatureName) {
         name = creatureName;
         int randomNumber = (int) ((Math.random() * 1000) + 1);
         magicPower = randomNumber % 999;
@@ -16,11 +26,11 @@ public class Short extends ShortIdentity implements Entity, Comparable<Short> {
         strength = randomNumber % 10;
         uniqueness = iq + strength + magicPower;
         relationship = new Relationship(this);
-
+        allShorts.add(this);
     }
 
-    public static Short createShort(String creatureName) {
-        return new Short(creatureName);
+    public static Shorty createShort(String creatureName) {
+        return new Shorty(creatureName);
     }
 
     @Override
@@ -29,14 +39,14 @@ public class Short extends ShortIdentity implements Entity, Comparable<Short> {
     }
 
     @Override
-    public int compareTo(Short o) {
+    public int compareTo(Shorty o) {
         return uniqueness - o.getUniqueness();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Short) {
-            Short other = (Short) obj;
+        if (obj instanceof Shorty) {
+            Shorty other = (Shorty) obj;
             return other.uniqueness == uniqueness;
         } else return false;
     }
@@ -63,5 +73,10 @@ public class Short extends ShortIdentity implements Entity, Comparable<Short> {
 
     public Job getJob() {
         return job;
+    }
+
+    public Shorty setLocation(City location) {
+        this.location = location;
+        return this;
     }
 }
