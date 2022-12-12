@@ -1,3 +1,6 @@
+package main;
+
+import analyze.Analyzer;
 import collection.Collection;
 import creatures.ShortIdentity;
 import creatures.Shorty;
@@ -57,22 +60,37 @@ public class Main {
         collection.getStream().sorted(Comparator.comparingInt(ShortIdentity::getIq)).forEach(a -> System.out.println(a + "{Iq-" + a.getIq() + "}"));
         collection.getStream().sorted(Comparator.comparingInt(ShortIdentity::getStrength)).forEach(a -> System.out.println(a + "{Strength-" + a.getStrength() + "}"));
         collection.getStream().sorted(Comparator.comparingInt(ShortIdentity::getMagicPower)).forEach(a -> System.out.println(a + "{MagicPower-" + a.getMagicPower() + "}"));
-
         System.out.println();
+
         ScienceCity scienceCity = new ScienceCity();
-        City.cities.add(scienceCity);
-        Shorty fuchsia = Shorty.createShort("Fuchsia");
-        shorts.put(fuchsia.toString(), fuchsia);
-        Shorty herring = Shorty.createShort("Herring");
-        shorts.put(herring.toString(), herring);
+
         Analyzer analyzer = Analyzer.getAnalyzer();
 
         analyzer.analyzeCity();
-        herring.getLocation();
-        fuchsia.getLocation();
+
+        Shorty fuchsia = Shorty.createShort("Fuchsia");
+
+        Shorty herring = Shorty.createShort("Herring");
+
+        analyzer.analyzeCity();
+
+
         Work sketching = new Work.WorkBuilder(WorkCondition.FINISH).setWorkType("sketching").setCreatures(fuchsia, herring).build();
 
         sketching.describeWork();
+
+        analyzer.analyzeCity();
+
+
+        Shorty cr1 = Shorty.createShort("Constructor1");
+        Shorty cr2 = Shorty.createShort("Constructor2");
+        Shorty cr3 = Shorty.createShort("Constructor3");
+
+        analyzer.analyzeCity();
+
+        Work creatingRocket = new Work.WorkBuilder(WorkCondition.FAST).setWorkType("creating blueprints for a rocket").setCreatures(cr1, cr2, cr3).build();
+        creatingRocket.describeWork();
+
     }
 
 }

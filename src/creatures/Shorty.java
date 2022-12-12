@@ -5,19 +5,20 @@ import creatures.behavior.Feelings;
 import creatures.behavior.Relationship;
 import item.City;
 import work.Job;
-
+import main.Main;
 import java.util.LinkedList;
 
 public class Shorty extends ShortIdentity implements Entity, Comparable<Shorty> {
     public static final LinkedList<Shorty> allShorts = new LinkedList<>();
 
-    public void getLocation() {
-        System.out.println(name+" is now in " + location);
+    public City getLocation() {
+        return location;
     }
 
     private Job job;
-    private City location;
-    public static final Behavior Behave= new Behavior();
+    private City location = null;
+    public static final Behavior Behave = new Behavior();
+
     private Shorty(String creatureName) {
         name = creatureName;
         int randomNumber = (int) ((Math.random() * 1000) + 1);
@@ -27,6 +28,7 @@ public class Shorty extends ShortIdentity implements Entity, Comparable<Shorty> 
         uniqueness = iq + strength + magicPower;
         relationship = new Relationship(this);
         allShorts.add(this);
+        Main.shorts.put(name,this);
     }
 
     public static Shorty createShort(String creatureName) {
@@ -55,7 +57,6 @@ public class Shorty extends ShortIdentity implements Entity, Comparable<Shorty> 
     public int hashCode() {
         return uniqueness;
     }
-
 
 
     public void describeEmotion() {
