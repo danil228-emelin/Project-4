@@ -3,7 +3,7 @@ package creatures;
 import creatures.behavior.Behavior;
 import creatures.behavior.Feelings;
 import creatures.behavior.Relationship;
-import item.City;
+import item.city.City;
 import work.Job;
 import main.Main;
 import java.util.LinkedList;
@@ -17,7 +17,7 @@ public class Shorty extends ShortIdentity implements Entity, Comparable<Shorty> 
 
     private Job job;
     private City location = null;
-    public static final Behavior Behave = new Behavior();
+    public static final Behavior Behave = Behavior.getBehavior();
 
     private Shorty(String creatureName) {
         name = creatureName;
@@ -76,8 +76,25 @@ public class Shorty extends ShortIdentity implements Entity, Comparable<Shorty> 
         return job;
     }
 
-    public Shorty setLocation(City location) {
+    public void setLocation(City location) {
         this.location = location;
-        return this;
+
+    }
+    public int getIq() {
+        return iq;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public int getMagicPower() {
+        return magicPower;
+    }
+    public Relationship getRelationship() {
+        return relationship;
+    }
+    public int getUniqueness() {
+        return uniqueness;
     }
 }

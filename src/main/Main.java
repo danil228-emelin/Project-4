@@ -4,12 +4,11 @@ import analyze.Analyzer;
 import collection.Collection;
 import creatures.ShortIdentity;
 import creatures.Shorty;
+import creatures.behavior.Behavior;
 import creatures.behavior.Feelings;
 import creatures.behavior.Relationship;
-import item.City;
-import item.Energy;
-import item.Essence;
-import item.ScienceCity;
+import item.*;
+import item.city.City;
 import work.Job;
 import work.Work;
 import work.WorkCondition;
@@ -34,35 +33,42 @@ public class Main {
         Energy energy = new Energy(14, "Interaction  two different types of energy:magnetic with moonstone energy", "Магнитная");
         Shorty scientist = Shorty.createShort("professor X");
         scientist.setJob(Job.SCIENTIST);
-        Essence someStaff = new Essence("scientific problems");
+        Essence someStaff = new Essence("someStaff").setItemDescription("scientific problems");
         cleverest.setEmotions(Feelings.ANGRY);
 
         developingNodes.describeWork();
         cleverest.describeEmotion();
         developingNodes.compareWork(developingNodes2);
-        Shorty.Behave.action(p -> think(p, energy), cleverest);
-        Shorty.Behave.action(p -> becomeFriends(p, scientist), cleverest);
-        Shorty.Behave.action(p -> shareThoughts(p, scientist), cleverest);
-        getDescriptionBehavior();
-        Shorty.Behave.action(p -> discuss(p, scientist, someStaff), cleverest);
-        Shorty.Behave.action(p -> arguing(p, scientist), cleverest);
-        Shorty.Behave.action(p -> showRespect(p, scientist), cleverest);
-        Shorty.Behave.action(p -> understand(p, scientist, "science arguing-normal "), cleverest);
-        Shorty.Behave.action(p -> say(p, "it is ok to argue in science"), scientist);
+        Shorty.Behave.think(cleverest,energy);
+
+        Shorty.Behave.becomeFriends(cleverest,scientist);
+
+        Shorty.Behave.shareThoughts(cleverest,scientist);
+
+       getDescriptionBehavior();
+
+        Shorty.Behave.discuss(cleverest,scientist,someStaff);
+
+        Shorty.Behave.arguing(cleverest,scientist);
+
+        Shorty.Behave.showRespect(scientist,"");
+
+        Shorty.Behave.understand(cleverest,scientist," science arguing-normal ");
+
+        Shorty.Behave.say(scientist,"it is ok to argue in science");
 
 
         Collection<Shorty> collection = new Collection<>();
         collection.add(cleverest);
         collection.add(constructors);
         System.out.println();
-        collection.getStream().forEach(x -> Shorty.Behave.actionRelationSheep(Relationship::getAllFriends, x));
         collection.getStream().sorted().forEach(a -> System.out.println(a.toString() + "{Uniqueness-" + a.getUniqueness() + "}"));
-        collection.getStream().sorted(Comparator.comparingInt(ShortIdentity::getIq)).forEach(a -> System.out.println(a + "{Iq-" + a.getIq() + "}"));
-        collection.getStream().sorted(Comparator.comparingInt(ShortIdentity::getStrength)).forEach(a -> System.out.println(a + "{Strength-" + a.getStrength() + "}"));
-        collection.getStream().sorted(Comparator.comparingInt(ShortIdentity::getMagicPower)).forEach(a -> System.out.println(a + "{MagicPower-" + a.getMagicPower() + "}"));
+        collection.getStream().sorted(Comparator.comparingInt(Shorty::getIq)).forEach(a -> System.out.println(a + "{Iq-" + a.getIq() + "}"));
+        collection.getStream().sorted(Comparator.comparingInt(Shorty::getStrength)).forEach(a -> System.out.println(a + "{Strength-" + a.getStrength() + "}"));
+        collection.getStream().sorted(Comparator.comparingInt(Shorty::getMagicPower)).forEach(a -> System.out.println(a + "{MagicPower-" + a.getMagicPower() + "}"));
         System.out.println();
-
-        ScienceCity scienceCity = new ScienceCity();
+        @SuppressWarnings("All")
+        City scienceCity = new City("ScienceCity");
 
         Analyzer analyzer = Analyzer.getAnalyzer();
 
@@ -90,6 +96,44 @@ public class Main {
 
         Work creatingRocket = new Work.WorkBuilder(WorkCondition.FAST).setWorkType("creating blueprints for a rocket").setCreatures(cr1, cr2, cr3).build();
         creatingRocket.describeWork();
+
+        Blueprint blueprint = (Blueprint) analyzer.analyzeBluePrint();
+        blueprint.getDescription();
+        @SuppressWarnings("All")
+        Factory factory1 = new Factory("factory1");
+        @SuppressWarnings("All")
+        Factory factory2 = new Factory("factory2");
+        Blueprint.send();
+        @SuppressWarnings("All")
+        City sunCity = new City("SunCity");
+        Shorty klepka = Shorty.createShort("Klepka");
+        klepka.setJob(Job.WORKER);
+
+        sketching.makeBoss(klepka, "monitoring  details' progress");
+        analyzer.analyzeCity();
+        Car car = analyzer.analyzeCarDescription(klepka, "car");
+        car.getDescription();
+        Shorty.Behave.showRespect(klepka,"as he does a lot");
+
+        Essence moon = new Essence("Moon");
+        Essence moonstone = new Essence("Moonstone").setLocation("Moon").
+                setItemDescription("as it gives cleverest strength to handle with gravity ").setItemType("all sorts of experiments");
+        Shorty.Behave.think(scientist,moon);
+
+        Shorty.Behave.think(scientist,moonstone);
+
+        Shorty.Behave.looseAbility(scientist,moonstone,moonstone.getLocation()+" becasue of "+cleverest);
+
+        Shorty.Behave.ask(scientist,cleverest,moonstone);
+
+        Shorty.Behave.get(scientist);
+
+        Shorty.Behave.matchFacts(scientist);
+        Shorty.Behave.calculate(scientist);
+        Shorty.Behave.makeConclusion(scientist);
+        cleverest.setEmotions(Feelings.HAPPY);
+        cleverest.describeEmotion();
+        Shorty.Behave.hope(cleverest);
 
     }
 

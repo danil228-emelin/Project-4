@@ -1,10 +1,10 @@
 package creatures.behavior;
 
 public enum Feelings {
-    ANGRY("angry"), EXHAUSTED("exhausted"), RELAXED("relaxed");
-    private String title;
+    ANGRY("angry"),HAPPY("happy");
+    private final String title;
 
-    private Feelings(String s) {
+    Feelings(String s) {
         title = s;
     }
 

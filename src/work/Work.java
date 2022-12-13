@@ -61,4 +61,9 @@ public class Work extends WorkIdentity {
 
 
     }
+
+    public void makeBoss(Shorty shorty,String activity) {
+    System.out.println(toString(creatures)+" make responsible for "+activity+" "+shorty.getJob()+"-"+shorty);
+    }
+
 }
