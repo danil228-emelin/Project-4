@@ -7,6 +7,7 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
     private Node<K, V>[] hashTable;
     private int size = 0;
     private double threshold;
+
     @SuppressWarnings("unchecked")
     public Collection() {
 
@@ -60,6 +61,7 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
         }
         return false;
     }
+
     @SuppressWarnings("unchecked")
     private void arrayDoubling() {
         Node<K, V>[] oldOne = hashTable;
@@ -119,38 +121,39 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
     private int hash(K key) {
 
         int hash = 31 * 17 + key.hashCode();
+
         return Math.abs(hash % hashTable.length);
     }
 
     @Override
     public Iterator<V> iterator() {
         return new Iterator<>() {
-            int counterArray;
-            int valuesCounter;
+            int counterArray = -1;
+            int valuesCounter = 0;
             Iterator<Node<K, V>> subIterator = null;
 
             @Override
             public boolean hasNext() {
                 if (valuesCounter == size)
                     return false;
-                if (subIterator == null || !subIterator.hasNext()) {
-                    if (moveToNextCell()) {
-                        subIterator = hashTable[counterArray].getNodes().iterator();
-                    } else {
-                        return false;
-                    }
-                }
-                return subIterator.hasNext();
+                if ((subIterator == null || !subIterator.hasNext()) && moveToNextCell()) {
 
+                    subIterator = hashTable[counterArray].getNodes().iterator();
+                }
+
+                return subIterator.hasNext();
 
             }
 
             private boolean moveToNextCell() {
-                do
-                    counterArray++;
-                while (hashTable[counterArray] == null);
+                do {
 
-                return hashTable[counterArray] != null;
+                    counterArray++;
+
+                } while (counterArray < hashTable.length && hashTable[counterArray] == null);
+
+
+                return counterArray < hashTable.length && hashTable[counterArray] != null;
             }
 
             @Override
@@ -220,7 +223,7 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
                 return true;
             }
             if (obj instanceof Node) {
-                Node<K, V> node = (Node<K,V>) obj;
+                Node<K, V> node = (Node<K, V>) obj;
                 return (Objects.equals(key, node.getKey())
                         && Objects.equals(value, node.getValue())
                         || Objects.equals(hash, node.hashCode()));
@@ -232,11 +235,6 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
 
     public static void main(String[] args) {
         Collection<String, Integer> collection = new Collection<>();
-        collection.insert("1", 1);
-        collection.insert("2", 2);
-        collection.insert("3", 3);
-
-
 
     }
 }
