@@ -11,15 +11,10 @@ import creatures.Shorty;
 public class Car extends Essence {
     private Shorty owner;
 
-    public Car(String name, Shorty shorty) {
+    public Car(String name) {
         super(name);
-        owner = shorty;
 
 
-    }
-
-    public Shorty getOwner() {
-        return owner;
     }
 
     public Car setOwner(Shorty owner) {

@@ -1,14 +1,14 @@
 package creatures;
 
-import creatures.behavior.Behavior;
 import creatures.behavior.Feelings;
 import creatures.behavior.Relationship;
 import item.city.City;
-import work.Job;
 import main.Main;
+import work.Job;
+
 import java.util.LinkedList;
 
-public class Shorty extends ShortIdentity implements Entity, Comparable<Shorty> {
+public class Shorty extends ShortIdentity {
     public static final LinkedList<Shorty> allShorts = new LinkedList<>();
 
     public City getLocation() {
@@ -17,7 +17,7 @@ public class Shorty extends ShortIdentity implements Entity, Comparable<Shorty> 
 
     private Job job;
     private City location = null;
-    public static final Behavior Behave = Behavior.getBehavior();
+
 
     private Shorty(String creatureName) {
         name = creatureName;
@@ -28,7 +28,7 @@ public class Shorty extends ShortIdentity implements Entity, Comparable<Shorty> 
         uniqueness = iq + strength + magicPower;
         relationship = new Relationship(this);
         allShorts.add(this);
-        Main.shorts.put(name,this);
+        Main.shorts.put(name, this);
     }
 
     public static Shorty createShort(String creatureName) {
@@ -80,6 +80,7 @@ public class Shorty extends ShortIdentity implements Entity, Comparable<Shorty> 
         this.location = location;
 
     }
+
     public int getIq() {
         return iq;
     }
@@ -91,9 +92,11 @@ public class Shorty extends ShortIdentity implements Entity, Comparable<Shorty> 
     public int getMagicPower() {
         return magicPower;
     }
+
     public Relationship getRelationship() {
         return relationship;
     }
+
     public int getUniqueness() {
         return uniqueness;
     }

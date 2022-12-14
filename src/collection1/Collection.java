@@ -1,16 +1,15 @@
 package collection1;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
     private Node<K, V>[] hashTable;
     private int size = 0;
     private double threshold;
-
+    @SuppressWarnings("unchecked")
     public Collection() {
+
         hashTable = (Node<K, V>[]) new Node[16];
         threshold = hashTable.length * 0.75;
     }
@@ -37,7 +36,7 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
     }
 
     private boolean simpleAdd(int index, Node<K, V> newNode) {
-        hashTable[index] = new Node<>(null, null);
+        hashTable[index] = newNode;
         hashTable[index].getNodes().add(newNode);
         size++;
         return true;
@@ -61,7 +60,7 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
         }
         return false;
     }
-
+    @SuppressWarnings("unchecked")
     private void arrayDoubling() {
         Node<K, V>[] oldOne = hashTable;
         hashTable = (Node<K, V>[]) new Node[oldOne.length * 2];
@@ -99,8 +98,10 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
     @Override
     public V get(K key) {
         int index = hash(key);
-        if (index < hashTable.length && hashTable[index] != null) {
+        if (hashTable[index] != null) {
+
             List<Node<K, V>> list = hashTable[index].getNodes();
+
             for (Node<K, V> node : list) {
                 if (key.equals(node.getKey())) {
                     return node.getValue();
@@ -147,9 +148,9 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
             private boolean moveToNextCell() {
                 do
                     counterArray++;
-                while (hashTable[counterArray] == null && counterArray < hashTable.length);
+                while (hashTable[counterArray] == null);
 
-                return (hashTable[counterArray] != null && counterArray < hashTable.length);
+                return hashTable[counterArray] != null;
             }
 
             @Override
@@ -159,6 +160,14 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
             }
         };
 
+
+    }
+
+    public List<K> getKeys() {
+        return Arrays.stream(hashTable).
+                filter(Objects::nonNull).
+                map(Node::getKey).
+                collect(Collectors.toList());
 
     }
 
@@ -176,6 +185,7 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
 
         }
 
+
         private List<Node<K, V>> getNodes() {
             return nodes;
         }
@@ -184,7 +194,7 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
             return Math.abs(hashCode() % hashTable.length);
         }
 
-        private K getKey() {
+        protected K getKey() {
             return key;
         }
 
@@ -199,17 +209,18 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
         @Override
         public int hashCode() {
 
-            hash = (31 * 17 + key.hashCode()) + value.hashCode();
+            hash = 31 * 17 + key.hashCode();
             return Math.abs(hash);
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public boolean equals(Object obj) {
             if (this == obj) {
                 return true;
             }
             if (obj instanceof Node) {
-                Node<K, V> node = (Node) obj;
+                Node<K, V> node = (Node<K,V>) obj;
                 return (Objects.equals(key, node.getKey())
                         && Objects.equals(value, node.getValue())
                         || Objects.equals(hash, node.hashCode()));
@@ -217,5 +228,15 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
 
             return false;
         }
+    }
+
+    public static void main(String[] args) {
+        Collection<String, Integer> collection = new Collection<>();
+        collection.insert("1", 1);
+        collection.insert("2", 2);
+        collection.insert("3", 3);
+
+
+
     }
 }

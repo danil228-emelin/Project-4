@@ -2,11 +2,10 @@ package main;
 
 import analyze.Analyzer;
 import collection.Collection;
-import creatures.ShortIdentity;
 import creatures.Shorty;
 import creatures.behavior.Behavior;
+import creatures.behavior.CreatureInteraction;
 import creatures.behavior.Feelings;
-import creatures.behavior.Relationship;
 import item.*;
 import item.city.City;
 import work.Job;
@@ -16,7 +15,7 @@ import work.WorkCondition;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import static creatures.behavior.Behavior.*;
+import static creatures.behavior.Behavior.getDescriptionBehavior;
 
 public class Main {
     public static final HashMap<String, Shorty> shorts = new HashMap<>();
@@ -30,7 +29,7 @@ public class Main {
         Shorty constructors = Shorty.createShort("Builders");
         constructors.setJob(Job.WORKER);
         Work developingNodes2 = new Work.WorkBuilder(WorkCondition.FAST).setWorkType("Developing nodes").setCreatures(constructors).build();
-        Energy energy = new Energy(14, "Interaction  two different types of energy:magnetic with moonstone energy", "Магнитная");
+        Essence energy = new Essence(" energy,").setItemDescription( "Interaction  two different types of energy:magnetic with moonstone energy");
         Shorty scientist = Shorty.createShort("professor X");
         scientist.setJob(Job.SCIENTIST);
         Essence someStaff = new Essence("someStaff").setItemDescription("scientific problems");
@@ -39,23 +38,25 @@ public class Main {
         developingNodes.describeWork();
         cleverest.describeEmotion();
         developingNodes.compareWork(developingNodes2);
-        Shorty.Behave.think(cleverest,energy);
+        Behavior.think(cleverest, energy);
 
-        Shorty.Behave.becomeFriends(cleverest,scientist);
 
-        Shorty.Behave.shareThoughts(cleverest,scientist);
+        CreatureInteraction.becomeFriends(cleverest, scientist);
 
-       getDescriptionBehavior();
 
-        Shorty.Behave.discuss(cleverest,scientist,someStaff);
+        Behavior.shareThoughts(cleverest, scientist);
 
-        Shorty.Behave.arguing(cleverest,scientist);
+        getDescriptionBehavior();
 
-        Shorty.Behave.showRespect(scientist,"");
+        Behavior.discuss(cleverest, scientist, someStaff);
 
-        Shorty.Behave.understand(cleverest,scientist," science arguing-normal ");
+        Behavior.arguing(cleverest, scientist);
 
-        Shorty.Behave.say(scientist,"it is ok to argue in science");
+        Behavior.showRespect(scientist, "");
+
+        Behavior.understand(cleverest, scientist, " science arguing-normal ");
+
+        Behavior.say(scientist, "it is ok to argue in science");
 
 
         Collection<Shorty> collection = new Collection<>();
@@ -113,28 +114,30 @@ public class Main {
         analyzer.analyzeCity();
         Car car = analyzer.analyzeCarDescription(klepka, "car");
         car.getDescription();
-        Shorty.Behave.showRespect(klepka,"as he does a lot");
+        Behavior.showRespect(klepka, "as he does a lot");
 
         Essence moon = new Essence("Moon");
         Essence moonstone = new Essence("Moonstone").setLocation("Moon").
                 setItemDescription("as it gives cleverest strength to handle with gravity ").setItemType("all sorts of experiments");
-        Shorty.Behave.think(scientist,moon);
+        Behavior.think(scientist, moon);
 
-        Shorty.Behave.think(scientist,moonstone);
+        Behavior.think(scientist, moonstone);
 
-        Shorty.Behave.looseAbility(scientist,moonstone,moonstone.getLocation()+" becasue of "+cleverest);
+        Behavior.looseAbility(scientist, moonstone, moonstone.getLocation() + " because of " + cleverest);
 
-        Shorty.Behave.ask(scientist,cleverest,moonstone);
+        Behavior.ask(scientist, cleverest, moonstone);
 
-        Shorty.Behave.get(scientist);
+        Behavior.get(scientist);
 
-        Shorty.Behave.matchFacts(scientist);
-        Shorty.Behave.calculate(scientist);
-        Shorty.Behave.makeConclusion(scientist);
+        Behavior.matchFacts(scientist);
+        Behavior.calculate(scientist);
+        Behavior.makeConclusion(scientist);
         cleverest.setEmotions(Feelings.HAPPY);
         cleverest.describeEmotion();
-        Shorty.Behave.hope(cleverest);
+        Behavior.hope(cleverest);
 
+        collection1.Collection<String,Shorty> collectionTree=new collection1.Collection<>();
+       collectionTree.insert(scientist.toString(),scientist);
     }
 
 }

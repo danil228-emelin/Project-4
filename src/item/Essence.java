@@ -2,7 +2,7 @@ package item;
 
 
 public class Essence {
-   private String location ;
+    private String location ;
 
     public String getLocation() {
         return (this +" is in "+location);
@@ -13,7 +13,7 @@ public class Essence {
         return this;
     }
 
-    private String itemName;
+    private final String itemName;
 
     public Essence(String name) {
      itemName = name;

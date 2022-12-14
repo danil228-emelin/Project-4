@@ -107,7 +107,7 @@ public class Analyzer {
         AnnotationDescription[] annotations = Car.class.getAnnotationsByType(AnnotationDescription.class);
         String description = Arrays.stream(annotations).map(AnnotationDescription::description).collect(Collectors.joining(","));
 
-        return (Car) new Car(name, shorty).setItemDescription(description);
+        return (Car) new Car(name).setOwner(shorty).setItemDescription(description);
     }
 
 }

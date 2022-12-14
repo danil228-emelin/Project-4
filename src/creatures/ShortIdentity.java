@@ -4,7 +4,7 @@ import creatures.behavior.Feelings;
 import creatures.behavior.Relationship;
 
 
-abstract public class ShortIdentity {
+abstract public class ShortIdentity  implements Entity, Comparable<Shorty>{
 
 
 
