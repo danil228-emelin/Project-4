@@ -23,7 +23,9 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
             arrayDoubling();
         }
         Node<K, V> newNode = new Node<>(key, value);
-        int index = newNode.hash();
+
+        int index = newNode.getHash();
+
         if (hashTable[index] == null) {
             return simpleAdd(index, newNode);
         }
@@ -39,6 +41,7 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
     private boolean simpleAdd(int index, Node<K, V> newNode) {
         hashTable[index] = newNode;
         hashTable[index].getNodes().add(newNode);
+
         size++;
         return true;
     }
@@ -46,19 +49,24 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
     private boolean keyExistButValueNew(Node<K, V> nodeFromList, Node<K, V> newNode, V value) {
         if (newNode.getKey().equals(nodeFromList.getKey()) && !newNode.getValue().equals(nodeFromList.getValue())) {
             nodeFromList.setValue(value);
+
+
             return true;
         }
+
+
         return false;
     }
 
     private boolean collisionProcessing(Node<K, V> nodeFromList, Node<K, V> newNode, List<Node<K, V>> nodes) {
-        if (newNode.hashCode() == nodeFromList.hashCode() && !Objects.equals(newNode.key, nodeFromList.key)
+        if (newNode.getHash() == nodeFromList.getHash() && !Objects.equals(newNode.key, nodeFromList.key)
                 && !Objects.equals(newNode.value, nodeFromList.value)) {
 
             nodes.add(newNode);
             size++;
             return true;
         }
+
         return false;
     }
 
@@ -136,9 +144,12 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
             public boolean hasNext() {
                 if (valuesCounter == size)
                     return false;
-                if ((subIterator == null || !subIterator.hasNext()) && moveToNextCell()) {
-
-                    subIterator = hashTable[counterArray].getNodes().iterator();
+                if (subIterator == null || !subIterator.hasNext()) {
+                    if (moveToNextCell()) {
+                        subIterator = hashTable[counterArray].getNodes().iterator();
+                    } else {
+                        return false;
+                    }
                 }
 
                 return subIterator.hasNext();
@@ -176,18 +187,20 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
 
     public class Node<K, V> {
         private final List<Node<K, V>> nodes;
-        private int hash;
         private final K key;
         private V value;
 
-
+        private final int hash;
         private Node(K key, V value) {
             this.key = key;
             this.value = value;
             nodes = new LinkedList<>();
-
+            hash = hash();
         }
 
+        public int getHash() {
+            return hash;
+        }
 
         private List<Node<K, V>> getNodes() {
             return nodes;
@@ -212,7 +225,7 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
         @Override
         public int hashCode() {
 
-            hash = 31 * 17 + key.hashCode();
+            int hash = 31 * 17 + key.hashCode();
             return Math.abs(hash);
         }
 
@@ -225,8 +238,7 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
             if (obj instanceof Node) {
                 Node<K, V> node = (Node<K, V>) obj;
                 return (Objects.equals(key, node.getKey())
-                        && Objects.equals(value, node.getValue())
-                        || Objects.equals(hash, node.hashCode()));
+                        && Objects.equals(value, node.getValue()));
             }
 
             return false;
@@ -234,7 +246,15 @@ public class Collection<K, V> implements Functionality<K, V>, Iterable<V> {
     }
 
     public static void main(String[] args) {
-        Collection<String, Integer> collection = new Collection<>();
+        Collection<String, String> collection = new Collection<>();
+        collection.insert("368149", "danil");
+        collection.insert("368134", "Roma");
+        collection.insert("368134", "Vi");
+        collection.insert("125124", "Oleg");
+
+        for (String name : collection) {
+            System.out.println(name);
+        }
 
     }
 }
