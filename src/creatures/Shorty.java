@@ -2,7 +2,7 @@ package creatures;
 
 import creatures.behavior.Feelings;
 import creatures.behavior.Relationship;
-import item.city.City;
+import item.City;
 import main.Main;
 import work.Job;
 

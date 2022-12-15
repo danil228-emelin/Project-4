@@ -1,8 +1,10 @@
-package item.city;
+package item;
 
 import annotations.city.CityAnnotation;
+import creatures.Shorty;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 @CityAnnotation(name = "Fuchsia", city = "ScienceCity")
@@ -14,24 +16,17 @@ import java.util.Map;
 public class City {
     private final String name;
     public static final Map<String, City> allCities = new HashMap<>();
+    private final LinkedList<Shorty> citizens = new LinkedList<>();
 
+    public LinkedList<Shorty> getCitizens() {
+        return citizens;
+    }
 
     public City(String name) {
         this.name = name;
         allCities.put(name, this);
     }
 
-
-    private int population;
-
-    public int getPopulation() {
-        return population;
-    }
-
-    public void setPopulation(int population) {
-        this.population = population;
-
-    }
 
     @Override
     public String toString() {

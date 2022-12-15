@@ -5,11 +5,7 @@ import annotations.city.CityAnnotation;
 import annotations.description.AnnotationDescription;
 import annotations.description_method.MethodDescription;
 import creatures.Shorty;
-import item.Blueprint;
-import item.Car;
-import item.Essence;
-import item.Factory;
-import item.city.City;
+import item.*;
 import main.Main;
 
 import java.util.Arrays;
@@ -42,14 +38,14 @@ public class Analyzer {
                         City c = x.getLocation();
 
                         if (c != city.get() && c != null) {
-                            c.setPopulation(c.getPopulation() - 1);
+                            c.getCitizens().remove(x);
                         }
 
 
                         if (c == null || c != city.get()) {
                             city.ifPresent(l -> {
                                 x.setLocation(l);
-                                l.setPopulation(l.getPopulation() + 1);
+                                l.getCitizens().add(x);
                                 System.out.println(shortyOptional.get() + " is in " + city.get());
                             });
 

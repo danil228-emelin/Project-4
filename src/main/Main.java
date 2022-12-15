@@ -7,7 +7,7 @@ import creatures.behavior.Behavior;
 import creatures.behavior.CreatureInteraction;
 import creatures.behavior.Feelings;
 import item.*;
-import item.city.City;
+import item.City;
 import work.Job;
 import work.Work;
 import work.WorkCondition;
